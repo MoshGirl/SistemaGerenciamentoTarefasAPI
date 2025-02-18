@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SistemaGerenciamentoTarefasAPI.Data.Mapping;
 using SistemaGerenciamentoTarefasAPI.Model;
 
 namespace SistemaGerenciamentoTarefasAPI.Data
@@ -14,14 +15,8 @@ namespace SistemaGerenciamentoTarefasAPI.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Usuario>()
-                .HasIndex(u => u.Email)
-                .IsUnique();
-
-            modelBuilder.Entity<Tarefa>()
-                .HasOne(t => t.Usuario)
-                .WithMany(u => u.Tarefas)
-                .HasForeignKey(t => t.UsuarioID);
+            modelBuilder.ApplyConfiguration(new UsuarioMapping());
+            modelBuilder.ApplyConfiguration(new TarefaMapping());
         }
     }
 }
